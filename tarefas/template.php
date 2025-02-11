@@ -1,12 +1,3 @@
-<?php
-    // Garante que a variável $lista_tarefas seja sempre um array válido
-    $lista_tarefas = $_SESSION['lista_tarefas'] ?? [];
-
-    // Se a variável for uma string (caso tenha sido corrompida), a convertemos para array vazio
-    if (!is_array($lista_tarefas)) {
-        $lista_tarefas = [];
-    }
-?>
 <!DOCTYPE html>
 <html lang="pt-BR">
 
@@ -14,7 +5,6 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Gerenciador de Tarefas</title>
-    <!-- <link rel="stylesheet" href="/css/tarefas.css" type="text/css"> -->
     <link rel="stylesheet" href="css/tarefas.css" type="text/css">
 </head>
 
@@ -43,9 +33,9 @@
             <fieldset>
                 <legend>Prioridade:</legend>
                 <label>
-                    <input type="radio" name="prioridade" value="baixa" checked /> Baixa
-                    <input type="radio" name="prioridade" value="media" /> Média
-                    <input type="radio" name="prioridade" value="alta" /> Alta
+                    <input type="radio" name="prioridade" value="1" checked /> Baixa
+                    <input type="radio" name="prioridade" value="2" /> Média
+                    <input type="radio" name="prioridade" value="3" /> Alta
                 </label>
             </fieldset>
 
@@ -74,7 +64,7 @@
                     <td><?php echo htmlspecialchars($tarefa['descricao'] ?? ''); ?></td>
                     <td><?php echo htmlspecialchars($tarefa['prazo'] ?? ''); ?></td>
                     <td><?php echo htmlspecialchars($tarefa['prioridade'] ?? ''); ?></td>
-                    <td><?php echo htmlspecialchars($tarefa['concluida'] ?? 'Não'); ?></td>
+                    <td><?php echo ($tarefa['concluida'] === 'Sim') ? 'Sim' : 'Não'; ?></td>
                 </tr>
             <?php endforeach; ?>
         <?php else : ?>

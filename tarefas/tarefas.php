@@ -1,27 +1,22 @@
 <?php
-$_SESSION['lista_tarefas'] = []; // Limpa todas as tarefas
-session_start();
-// Garante que a sessão contém um array
-if (!isset($_SESSION['lista_tarefas']) || !is_array($_SESSION['lista_tarefas'])) {
-    $_SESSION['lista_tarefas'] = [];
-}
+error_reporting(E_ALL);
+ini_set('display_errors', 1);
 
-if (!empty($_GET['nome'])) {
+session_start();
+require "banco.php";
+
+if (isset($_GET['nome']) && $_GET['nome'] != '') {
     $tarefa = [
-        'nome'       => $_GET['nome'],
-        'descricao'  => $_GET['descricao'] ?? '',
-        'prazo'      => $_GET['prazo'] ?? '',
+        'nome' => $_GET['nome'],
+        'descricao' => $_GET['descricao'] ?? '',
+        'prazo' => $_GET['prazo'] ?? '',
         'prioridade' => $_GET['prioridade'] ?? 'baixa',
-        'concluida'  => isset($_GET['concluida']) ? 'Sim' : 'Não',
+        'concluida' => isset($_GET['concluida']) ? 'Sim' : 'Não',
     ];
 
-    $_SESSION['lista_tarefas'][] = $tarefa;
-
-    // EVITA DUPLICAÇÃO: Redireciona após salvar a tarefa
-    header("Location: tarefas.php");
-    exit;
+    gravar_tarefa($conexao, $tarefa);
 }
 
-$lista_tarefas = $_SESSION['lista_tarefas'];
+$lista_tarefas = buscar_tarefas($conexao);
 
-include 'template.php';
+include "template.php";
