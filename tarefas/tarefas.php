@@ -17,19 +17,29 @@ $tarefa	=	[
     'concluida' => ''
 ];
 
-if (isset($_GET['nome']) && $_GET['nome'] != '') {
+if (array_key_exists('nome', $_POST) && $_POST['nome'] != '') {
     $tarefa = [
-        'id'         => $_GET['id'] ?? 0,
-        'nome'       => $_GET['nome'],
-        'descricao'  => $_GET['descricao'] ?? '',
-        'prazo'      => $_GET['prazo'] ?? '',
-        'prioridade' => $_GET['prioridade'] ?? 1,
-        'concluida'  => isset($_GET['concluida']) ? 1 : 0,
+        'id' => 0,
+        'nome' => $_POST['nome'],
+        'descricao' => '',
+        'prazo' => '',
+        'prioridade' => $_POST['prioridade'],
+        'concluida' => 0,
     ];
-
+    
+    if (array_key_exists('descricao', $_POST)) {
+        $tarefa['descricao'] = $_POST['descricao'];
+    }
+    if (array_key_exists('prazo', $_POST)) {
+        $tarefa['prazo'] = $_POST['prazo'];
+    }
+    if (array_key_exists('concluida', $_POST)) {
+        $tarefa['concluida'] = $_POST['concluida'];
+    }
     gravar_tarefa($conexao, $tarefa);
-    header('Location:	tarefas.php');
-    die(); 
+    header('Location: tarefas.php');
+    die();
 }
+
 
 include "template.php";
