@@ -17,4 +17,19 @@ $tarefa	=	[
     'concluida' => ''
 ];
 
+if (isset($_GET['nome']) && $_GET['nome'] != '') {
+    $tarefa = [
+        'id'         => $_GET['id'] ?? 0,
+        'nome'       => $_GET['nome'],
+        'descricao'  => $_GET['descricao'] ?? '',
+        'prazo'      => $_GET['prazo'] ?? '',
+        'prioridade' => $_GET['prioridade'] ?? 1,
+        'concluida'  => isset($_GET['concluida']) ? 1 : 0,
+    ];
+
+    gravar_tarefa($conexao, $tarefa);
+    header('Location:	tarefas.php');
+    die(); 
+}
+
 include "template.php";

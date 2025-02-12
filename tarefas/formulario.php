@@ -12,7 +12,7 @@
         </label>
         <label>
             Prazo (Opcional):
-            <input type="text" name="prazo" value="<?php echo $tarefa['prazo']; ?>"
+            <input type="date" name="prazo" value="<?php echo $tarefa['prazo']; ?>"
             />
         </label>
         <fieldset>
